@@ -18,6 +18,16 @@ module.exports = function (prog) {
             options['is_text_selectable'] = false;
         }
 
+        if (cmd.annotatable) {
+            options['is_annotatable'] = cmd.annotatable;
+        }
+        if (cmd.authorName) {
+            options['author_name'] = cmd.authorName;
+        }
+        if (cmd.authorExternalId) {
+            options['author_external_id'] = cmd.authorExternalId;
+        }
+
         if (cmd.documentId) {
             debug('session requested with document id "%s"', cmd.documentId);
             prog.client.sessions.create(cmd.documentId, options, function (err, res) {
@@ -43,7 +53,10 @@ module.exports = function (prog) {
             ['-e, --expires [expires]', 'the timestamp at which this session should expire'],
             ['-D, --downloadable', 'allow downloads'],
             ['-T, --disable-text', 'disable text selection'],
-            ['-o, --open', 'open the viewing session URL on success']
+            ['-o, --open', 'open the viewing session URL on success'],
+            ['-A, --annotatable', 'allow annotations'],
+            ['-n, --author-name [authorName]', 'name of author'],
+            ['-E, --author-external-id [authorExternalId]', 'unique identifier of author']
         ],
         actions: [
             requestSession
